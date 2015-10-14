@@ -24,15 +24,16 @@ void main(){
 				if(a*b == c){
 					v ~= c;	
 				}
-				writeln(a," ", b, " ", c);
+				//writeln(a," ", b, " ", c);
 				++j;
 			}
 			++i;
 		}
 	}
-	while(nextEvenPermutation(n));
+	while(nextPermutation(n));
 	
 	int[] arr = v.sort.uniq.array;
+	arr.writeln;
 	writeln(arr.sum());
 
 }
