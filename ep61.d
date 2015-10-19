@@ -1,5 +1,7 @@
 import std.stdio, std.algorithm, std.math;
 
+//tests
+/*
 bool tri(int n){
 
 	real dummy;
@@ -77,7 +79,7 @@ bool oct(int n){
 	if(dummy!=x)
 		return false;
 	return true;
-}
+}*/
 
 bool connected(int x, int y){
 
@@ -96,26 +98,124 @@ bool connected(int x, int y){
 
 }
 
+int [] tri2(int st, int end){
+	
+	int[] A;
+
+	int n = 1;
+	int p = 1;
+	
+	while(p<end){
+	
+		if(p>=st) A~=p;
+		++n;
+		p = n*(n+1)/2;
+	}
+	return A;
+}
+
+int [] sqr2(int st, int end){
+	
+	int[] A;
+
+	int n = 1;
+	int p = 1;
+	
+	while(p<end){
+	
+		if(p>=st) A~=p;
+		++n;
+		p = n*n;
+	}
+	return A;
+}
+
+int [] pen2(int st, int end){
+	
+	int[] A;
+
+	int n = 1;
+	int p = 1;
+	
+	while(p<end){
+	
+		if(p>=st) A~=p;
+		++n;
+		p = n*(3*n-1)/2;
+	}
+	return A;
+}
+
+int [] hex2(int st, int end){
+	
+	int[] A;
+
+	int n = 1;
+	int p = n*(2*n-1);
+	
+	while(p<end){
+	
+		if(p>=st) A~=p;
+		++n;
+		p = n*(2*n-1);
+	}
+	return A;
+}
+
+int [] hep2(int st, int end){
+	
+	int[] A;
+
+	int n = 1;
+	int p = 1;
+	
+	while(p<end){
+	
+		if(p>=st) A~=p;
+		++n;
+		p = n*(5*n-3)/2;
+	}
+	return A;
+}
+
+int [] oct2(int st, int end){
+	
+	int[] A;
+
+	int n = 1;
+	int p = 1;
+	
+	while(p<end){
+	
+		if(p>=st) A~=p;
+		++n;
+		p = n*(3*n-2);
+	}
+	return A;
+}
+
+
 void main(){
 
 	int [] a_tri, a_sqr, a_pen, a_hex, a_hep, a_oct;
+	
+	int start = 1000, end = 10000;
+	
+	a_tri = tri2(start,end);
+	a_sqr = sqr2(start,end);
+	a_pen = pen2(start,end);
+	a_hex = hex2(start,end);
+	a_hep = hep2(start,end);
+	a_oct = oct2(start,end);
 
-	foreach(int i; 1000..10000){
-		if(tri(i)) a_tri ~=i;
-		if(sqr(i)) a_sqr ~=i;
-		if(pen(i)) a_pen ~=i;
-		if(hex(i)) a_hex ~=i;
-		if(hep(i)) a_hep ~=i;
-		if(oct(i)) a_oct ~=i;
-	}
-
-	int [][] A = [a_tri,a_sqr,a_pen,a_hex,a_pen,a_oct];
+	int [][] A = [a_tri,a_sqr,a_pen,a_hex,a_hep,a_oct];
+	A.sort();
 	bool found = false;
 	
 	do{
 	
-	foreach(a;A[0]){
-	foreach(b;A[1])
+	foreach(a;A[0])
+	foreach(b;A[1]){
 		if(connected(a,b))
 			foreach(c;A[2])
 			if(connected(b,c))
@@ -126,12 +226,14 @@ void main(){
 						foreach(f;A[5])
 						if(connected(e,f) && connected(f,a)){
 							writeln(a," ",b," ",c," ",d," ",e," ",f);
-							writeln("sum: ",a+b+c+d+e+f);
+							int [] B = [a,b,c,d,e,f];
+							writeln("sum: ",B.sum);
 							found = true;
 						}
 	}
-	//if(found)
-	//	break;
+	if(found)
+		break;
 	}
 	while(nextPermutation(A));
+	
 }
