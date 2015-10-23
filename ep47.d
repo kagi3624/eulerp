@@ -19,52 +19,37 @@ int [] prim_sieve(int n){
 	return v;
 }
 
-bool prim_t(long n){
-	
-	if(n<2)
-		return false;
-		
-	for(auto i=2; i*i<=n;++i)
-		if(!(n%i))
-			return false;
-	return true;
-}
 
 bool div_four(int n, const ref int[] P){
-
-	if(prim_t(n))
-		return false;
 	
 	int[] v;
 	
-	while(n){
-	
-		foreach(a;P){
-			if(a>n)
-				break;
-			if(!(n%a)){
-				v~=a;
-				n/=a;
-			}
+	for(int i; P[i]*P[i]<=n;++i){
+		while(n%P[i]==0){
+			v~=P[i];
+			n/=P[i];
 		}
 	}
-	
+	if(n>1)
+		v~=n;
+		
 	int [] prim_factors = v.dup.sort.uniq.array;
 	
 	if(prim_factors.length==4)
 		return true;
 	return false;
+
 }
 
 void main(){
 
-	int[] prims = prim_sieve(1000000);
+	int[] prims = prim_sieve(1000);
 	
 	for(int i;true;++i){
-		writeln(i);
 		if(div_four(i,prims) && div_four(i+1,prims) && div_four(i+2,prims) && div_four(i+3,prims)){
 			writeln(i);
 			break;
 		}
 	}
+
 }
