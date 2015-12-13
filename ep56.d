@@ -4,13 +4,9 @@ int dig_sum(BigInt n){
 
 	int s;
 	
-	while(n/10){
-	
+	while(n){
 		s+=n%10;
 		n/=10;
-		if(!(n/10)){
-			s+=n.toInt();
-		}
 	}
 
 	return s;
