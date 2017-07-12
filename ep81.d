@@ -1,40 +1,33 @@
-import std.file, std.stdio, std.string, std.conv, std.algorithm, std.array;
+import std.stdio;
+import std.algorithm;
+import std.array;
+import std.conv;
 
-	void main(){
-	
-	int[5][5] t = [[131,673,234,103,18],[201,96,342,965,150],[630,803,746,422,111],[537,699,497,121,956],[805,732,524,37,331]];
+void main() {
+    auto a = File("ep81.txt")
+             .byLine
+             .map!(line => line.splitter(',').map!(to!int).array)
+             .array;
 
-	/*auto matrix = File("ep81.txt")
-   		.byLine
-   		.map!(l => l.split(",")      // Split each line
-                 .map!(to!int)  // Turn into ints
-                 .array)        // Return an array
- 		  .array();
+for(size_t i; i<a.length-1; i++){
 	
-	for(auto i = 0; i<matrix.length-1;++i)
-	for(auto j = 0; j<matrix[i].length-1;++j)
-		if(matrix[i][j]+matrix[i][j+1]<matrix[i][j]+matrix[i+1][j])
-			matrix[i][j+1] = matrix[i][j]+matrix[i][j+1];
+	a[i+1][0]=a[i][0]+a[i+1][0];
+	a[0][i+1]=a[0][i]+a[0][i+1];
+}
+ 
+
+for(size_t i=1; i<a.length; i++)
+for(size_t j=1; j<a.length; j++){
+	
+		int u = a[i][j]+a[i][j-1];
+		int k = a[i][j]+a[i-1][j];
+	
+		if(u<k)
+			a[i][j]=u;
 		else
-			matrix[i+1][j] = matrix[i][j]+matrix[i+1][j];*/
-	
-	t.writeln;
-	
-	int i;
-	int j;
-	
-	while(i!=t.length-1 && j!=t.length-1){
-	
-		if(!j){
-			t[i+1][j]=t[i+1][j]+t[i][j];
-			++i;
-		}
-		else if()
-	}
-	
-				
+			a[i][j]=k;
+}
 
-			
-			
-	t.writeln;
+		
+    writeln(a[$-1][$-1]);
 }
